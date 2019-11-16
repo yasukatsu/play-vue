@@ -1,16 +1,18 @@
 <template>
-    <div class="signup">
-        <h2>Sign up</h2>
-        <input type="text" placeholder="Username" v-model="email">
-        <input type="password" placeholder="Password" v-model="password">
-        <button>Register</button>
-        <p>Do you have an account?
-            <router-link to="/signin">sign in now!!</router-link>
-        </p>
-    </div>
+  <div class="signup">
+    <h2>Sign up</h2>
+    <input type="text" placeholder="Username" v-model="email" />
+    <input type="password" placeholder="Password" v-model="password" />
+    <button @click="signUp">Register</button>
+    <p>
+      Do you have an account?
+      <router-link to="/signin">sign in now!!</router-link>
+    </p>
+  </div>
 </template>
 
 <script>
+import firebase from 'firebase'
 export default {
   name: 'Signup',
   data () {
@@ -18,38 +20,52 @@ export default {
       email: '',
       password: ''
     }
+  },
+  methods: {
+    signUp: function () {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(res => {
+          console.log('Create account: ', res.user.email)
+        })
+        .catch(error => {
+          console.log(error.message)
+        })
+    }
   }
 }
 </script>
 
 <style scoped>
-h1, h2 {
-    font-weight: normal;
+h1,
+h2 {
+  font-weight: normal;
 }
 ul {
-   list-style-type: none;
-   padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 li {
-    display: inline-block;
-    margin: 0 10px;
+  display: inline-block;
+  margin: 0 10px;
 }
 a {
-    color: brown
+  color: brown;
 }
 .signup {
-    margin-top: 20px;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
+  margin-top: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 input {
-    margin: 10px 0;
-    padding: 10px;
+  margin: 10px 0;
+  padding: 10px;
 }
 button {
-    margin: 10px 0;
-    padding: 10px;
+  margin: 10px 0;
+  padding: 10px;
 }
 </style>
