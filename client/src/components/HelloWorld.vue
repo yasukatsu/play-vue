@@ -2,21 +2,33 @@
   <div class='hello'>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
-    <button @click="apiPublic">public</button>
-    <button @click="apiPrivate">private</button>
+    <button @click='signOut'>Sign out</button>
+    <button @click='apiPublic'>public</button>
+    <button @click='apiPrivate'>private</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-export default{
+import firebase from 'firebase'
+export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      name: firebase.auth().currentUser.email
     }
   },
   methods: {
+    signOut: function () {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          localStorage.removeItem('jwt')
+          this.$router.push('/signin')
+        })
+    },
     apiPublic: async function () {
       let res = await axios.get('http://localhost:8000/public')
       this.msg = res.data
@@ -31,7 +43,8 @@ export default{
 
 // Add 'scoped' attribute to limit CSS to this component only
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
@@ -43,7 +56,7 @@ li {
   margin: 0 10px;
 }
 a {
-  color:aqua;
+  color: aqua;
 }
 button {
   margin: 10px 0;
