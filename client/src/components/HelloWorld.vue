@@ -1,5 +1,6 @@
 <template>
   <div class='hello'>
+    <h1>Hello {{ name }}!!</h1>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <button @click='signOut'>Sign out</button>
