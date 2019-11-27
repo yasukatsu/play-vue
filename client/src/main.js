@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import firebase from 'firebase'
 
+let app
+
 Vue.config.productionTip = false
 
 const config = {
@@ -17,10 +19,14 @@ const config = {
 }
 firebase.initializeApp(config)
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+firebase.auth().onAuthStateChanged(user => {
+  /* eslint-disable no-new */
+  if (!app) {
+    new Vue({
+      el: '#app',
+      router,
+      components: { App },
+      template: '<App/>'
+    })
+  }
 })
