@@ -28,7 +28,9 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           res => {
-            localStorage.setItem('jwt', res.user.qa)
+            res.user.getIdToken().then(idToken => {
+              localStorage.setItem('jwt', idToken.toString())
+            })
             this.$router.push('/')
           },
           err => {
