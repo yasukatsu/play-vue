@@ -4,6 +4,10 @@
     <input type="text" placeholder="email" v-model="email" />
     <input type="password" placeholder="Password" v-model="password" />
     <button @click="signIn">Sign in</button>
+
+    <div class="links">
+      <a @click="google">GoogleSignin</a>
+    </div>
     <p>
       You don't have an account?
       <router-link to="/signup">create account now!!</router-link>
@@ -37,6 +41,10 @@ export default {
             alert(err.message)
           }
         )
+    },
+    google: function () {
+      const provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithRedirect(provider)
     }
   }
 }

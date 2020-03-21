@@ -5,6 +5,8 @@ import Signup from '@/components/Signup'
 import Signin from '@/components/Signin'
 import firebase from 'firebase'
 
+import Google from '@/components/AuthGoogle'
+
 Vue.use(Router)
 
 let router = new Router({
@@ -28,6 +30,11 @@ let router = new Router({
       path: '/signin',
       name: '/Signin',
       component: Signin
+    },
+    {
+      path: '/google',
+      name: '/Google',
+      component: Google
     }
   ]
 })
